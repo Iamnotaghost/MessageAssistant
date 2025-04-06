@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAssistant.Views.HistoryPage"
+             Title="{Binding Title}"
+             xmlns:viewmodel="clr-namespace:MobileAssistant.ViewModels">
+
+    <Grid RowDefinitions="Auto,*"
+          Padding="20"
+          BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}">
+
+        <!-- Заголовок -->
+        <Label Text="История встреч" 
+               FontSize="24" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,10,0,20" />
+
+        <!-- Список встреч -->
+        <RefreshView Grid.Row="1"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+
+            <CollectionView ItemsSource="{Binding Meetings}"
+                            EmptyView="Нет сохраненных записей встреч">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Удалить"
+                                               BackgroundColor="#FF3B30"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HistoryViewModel}}, Path=DeleteMeetingCommand}"
+                                               CommandParameter="{Binding Id}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame Margin="0,5,0,5"
+                                   Padding="15"
+                                   BorderColor="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                                   CornerRadius="8">
+                                <Grid ColumnDefinitions="*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto">
+
+                                    <Label Grid.Column="0"
+                                           Grid.Row="0"
+                                           Text="{Binding Title}"
+                                           FontSize="18"
+                                           FontAttributes="Bold" />
+
+                                    <Label Grid.Column="0"
+                                           Grid.Row="1"
+                                           Text="{Binding RecordedAt, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                           FontSize="14"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+
+                                    <Label Grid.Column="0"
+                                           Grid.Row="2"
+                                           Text="{Binding Status, Converter={StaticResource StatusToStringConverter}}"
+                                           FontSize="14"
+                                           TextColor="{Binding Status, Converter={StaticResource StatusToColorConverter}}" />
+
+                                    <Button Grid.Column="1"
+                                            Grid.RowSpan="3"
+                                            Text="Открыть"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HistoryViewModel}}, Path=OpenMeetingCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            VerticalOptions="Center" />
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

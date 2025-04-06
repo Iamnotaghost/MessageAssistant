@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAssistant.Views.MainPage"
+             Title="{Binding Title}"
+             xmlns:viewmodel="clr-namespace:MobileAssistant.ViewModels">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="20"
+          BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}">
+
+        <!-- Заголовок -->
+        <Label Text="Мобильный ассистент" 
+               FontSize="28" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,20,0,0" />
+
+        <Image Source="app_logo.png"
+               HeightRequest="100"
+               WidthRequest="100"
+               HorizontalOptions="Center"
+               Margin="0,80,0,0" />
+
+        <!-- Основные кнопки -->
+        <VerticalStackLayout Grid.Row="1" 
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="20">
+
+            <Label Text="Запись и обработка встреч"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20" />
+
+            <Button Text="Начать запись"
+                    FontSize="16"
+                    HeightRequest="50"
+                    WidthRequest="220"
+                    Command="{Binding StartRecordingCommand}" />
+
+            <Button Text="Загрузить аудиофайл"
+                    FontSize="16"
+                    HeightRequest="50"
+                    WidthRequest="220"
+                    Command="{Binding UploadAudioCommand}" />
+
+        </VerticalStackLayout>
+
+        <!-- Кнопка истории -->
+        <Button Grid.Row="2"
+                Text="История встреч"
+                FontSize="16"
+                HeightRequest="50"
+                WidthRequest="220"
+                Margin="0,0,0,20"
+                HorizontalOptions="Center"
+                Command="{Binding ViewHistoryCommand}" />
+
+    </Grid>
+</ContentPage>

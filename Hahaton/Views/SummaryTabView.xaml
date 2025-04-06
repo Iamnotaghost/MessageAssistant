@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAssistant.Views.SummaryTabView">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <!-- Если обработка не завершена или нет данных -->
+            <Label Text="Краткий пересказ будет доступен после обработки аудиозаписи"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   IsVisible="{Binding Meeting.Summary, Converter={StaticResource IsNullConverter}}" />
+
+            <!-- Если обработка завершена и есть данные -->
+            <VerticalStackLayout IsVisible="{Binding Meeting.Summary, Converter={StaticResource IsNotNullConverter}}">
+                <Label Text="Краткий пересказ:"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="0,0,0,10" />
+
+                <Label Text="{Binding Meeting.Summary.Summary}"
+                       LineBreakMode="WordWrap" />
+
+                <Label Text="Ключевые темы:"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="0,20,0,10"
+                       IsVisible="{Binding Meeting.Summary.KeyTopics.Count, Converter={StaticResource IsGreaterThanZeroConverter}}" />
+
+                <CollectionView ItemsSource="{Binding Meeting.Summary.KeyTopics}"
+                                IsVisible="{Binding Meeting.Summary.KeyTopics.Count, Converter={StaticResource IsGreaterThanZeroConverter}}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Label Text="{Binding .}"
+                                       LineBreakMode="WordWrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

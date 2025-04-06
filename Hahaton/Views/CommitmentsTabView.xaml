@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MobileAssistant.Views.CommitmentsTabView">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <!-- Если обработка не завершена или нет данных -->
+            <Label 
+                Text="Обязательства будут доступны после обработки аудиозаписи"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="16"
+                IsVisible="{Binding Meeting.Commitments.Count, Converter={StaticResource IsZeroConverter}}" />
+
+            <!-- Если обработка завершена и есть данные -->
+            <CollectionView 
+                ItemsSource="{Binding Meeting.Commitments}"
+                IsVisible="{Binding Meeting.Commitments.Count, Converter={StaticResource IsGreaterThanZeroConverter}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame 
+                            Margin="0,5"
+                            Padding="15"
+                            BorderColor="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                            CornerRadius="8">
+                            <VerticalStackLayout Spacing="10">
+                                <Label 
+                                    Text="{Binding Text}"
+                                    LineBreakMode="WordWrap" />
+
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Label 
+                                        Grid.Column="0"
+                                        Text="{Binding ResponsiblePerson, StringFormat='Ответственный: {0}'}"
+                                        FontAttributes="Bold"
+                                        TextColor="{AppThemeBinding Light=#007AFF, Dark=#0A84FF}"
+                                        Margin="0,0,10,0" />
+
+                                    <Label 
+                                        Grid.Column="2"
+                                        Text="{Binding Deadline, StringFormat='Срок: {0:dd.MM.yyyy}'}"
+                                        IsVisible="{Binding Deadline, Converter={StaticResource IsNotNullConverter}}"
+                                        TextColor="{AppThemeBinding Light=#FF3B30, Dark=#FF453A}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

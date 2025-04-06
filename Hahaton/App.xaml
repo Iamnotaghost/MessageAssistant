@@ -1,0 +1,28 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MobileAssistant.Helpers.Converters"
+             x:Class="MobileAssistant.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Ресурсы приложения -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Конвертеры -->
+            <converters:StatusToStringConverter x:Key="StatusToStringConverter" />
+            <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:IntToProgressConverter x:Key="IntToProgressConverter" />
+            <converters:IsNullConverter x:Key="IsNullConverter" />
+            <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <converters:IsZeroConverter x:Key="IsZeroConverter" />
+            <converters:IsGreaterThanZeroConverter x:Key="IsGreaterThanZeroConverter" />
+            <converters:StringToColorConverter x:Key="StringToColorConverter" />
+            <converters:SpeakerIdToColorConverter x:Key="SpeakerIdToColorConverter" />
+            <converters:TabIndexToColorConverter x:Key="TabIndexToColorConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

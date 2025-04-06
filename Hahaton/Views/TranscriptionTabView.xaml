@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAssistant.Views.TranscriptionTabView">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <!-- Если обработка не завершена или нет данных -->
+            <Label Text="Расшифровка будет доступна после обработки аудиозаписи"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="16"
+                   IsVisible="{Binding Meeting.Transcription, Converter={StaticResource IsNullConverter}}" />
+
+            <!-- Если обработка завершена и есть данные -->
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Meeting.Transcription.Segments}"
+                                 Spacing="15"
+                                 IsVisible="{Binding Meeting.Transcription, Converter={StaticResource IsNotNullConverter}}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto,*"
+                              Padding="10"
+                              BackgroundColor="{Binding SpeakerId, Converter={StaticResource SpeakerIdToColorConverter}, ConverterParameter={Binding Meeting.Speakers}}">
+                            <Label Grid.Column="0"
+                                   Text="{Binding SpeakerName, StringFormat='{0}:'}"
+                                   FontAttributes="Bold"
+                                   Margin="0,0,10,0" />
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding Text}"
+                                   LineBreakMode="WordWrap" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>
